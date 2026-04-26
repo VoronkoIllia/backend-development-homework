@@ -3,30 +3,31 @@ const express = require("express");
 const router = express.Router();
 const commentValidator = require("../middlewares/validators/commentValidator");
 const validate = require("../middlewares/validate");
+const asyncHandler = require("../middlewares/asyncHandler");
 
 router.post(
   "/",
   commentValidator.createCommentRules,
   validate,
-  CommentsController.createComment,
+  asyncHandler(CommentsController.createComment),
 );
 router.delete(
   "/:id",
   commentValidator.deleteCommentRules,
   validate,
-  CommentsController.deleteComment,
+  asyncHandler(CommentsController.deleteComment),
 );
 router.get(
   "/post/:postId",
   commentValidator.postIdParamRules,
   validate,
-  CommentsController.getCommentsByPostId,
+  asyncHandler(CommentsController.getCommentsByPostId),
 );
 router.put(
   "/:id",
   commentValidator.updateCommentRules,
   validate,
-  CommentsController.updateComment,
+  asyncHandler(CommentsController.updateComment),
 );
 
 module.exports = router;

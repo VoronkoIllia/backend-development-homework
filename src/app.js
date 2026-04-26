@@ -3,6 +3,8 @@ const cors = require("cors");
 
 const postRouter = require("./routes/postsRouters");
 const commentRouter = require("./routes/commentsRouters");
+const errorHandler = require("./middlewares/errorHandler");
+const ApiError = require("./errors/ApiError");
 
 const app = express();
 
@@ -21,5 +23,9 @@ app.use("/comments", commentRouter);
 app.get("/", async (req, res) => {
   res.send("Home page");
 });
+
+// Обробка 404 помилок
+app.use((_, __, next) => next(ApiError.notFound("Page not found")));
+app.use(errorHandler);
 
 module.exports = app;

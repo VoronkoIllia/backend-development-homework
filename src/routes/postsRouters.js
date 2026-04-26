@@ -3,18 +3,19 @@ const router = express.Router();
 const PostController = require("../controllers/postsController");
 const postValidator = require("../middlewares/validators/postValidator");
 const validate = require("../middlewares/validate");
+const asyncHandler = require("../middlewares/asyncHandler");
 
 router.post(
   "/",
   postValidator.createPostRules,
   validate,
-  PostController.createPost,
+  asyncHandler(PostController.createPost),
 );
 router.get(
   "/",
   postValidator.getPostsRules,
   validate,
-  PostController.getAllPosts,
+  asyncHandler(PostController.getAllPosts),
 );
 router.get(
   "/search",
@@ -26,25 +27,25 @@ router.get(
   "/:id",
   postValidator.mongoIdParamRule,
   validate,
-  PostController.getPostById,
+  asyncHandler(PostController.getPostById),
 );
 router.delete(
   "/:id",
   postValidator.mongoIdParamRule,
   validate,
-  PostController.deletePost,
+  asyncHandler(PostController.deletePost),
 );
 router.put(
   "/:id",
   postValidator.updatePostRules,
   validate,
-  PostController.updatePost,
+  asyncHandler(PostController.updatePost),
 );
 router.post(
   "/:id/like",
   postValidator.mongoIdParamRule,
   validate,
-  PostController.likePost,
+  asyncHandler(PostController.likePost),
 );
 
 module.exports = router;
